@@ -10,4 +10,6 @@
     <color name="textMainWhite">#fff</color>
     <color name="textMainWhiteOff">#66FFFFFF</color>
     <color name="textRed">#ff200f</color>
+    <color name="textPurple">#c90fff</color>
+    <color name="textBlue">#140fff</color>
 </resources>

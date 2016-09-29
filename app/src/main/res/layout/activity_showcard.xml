@@ -3,7 +3,9 @@
     android:orientation="vertical"
     android:id="@+id/show_card_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradiant"
+    >
 
     <TextView
         android:id="@+id/show_content"
@@ -33,10 +35,13 @@
     <Button
         android:id="@+id/start_flash_card"
         android:text="_Start Deck from start"
+        android:textSize="24dp"
+        android:textColor="@color/colorPrimary"
+        android:background="@color/textMainWhite"
         android:visibility="visible"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         />
 

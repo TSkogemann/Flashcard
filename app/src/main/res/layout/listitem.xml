@@ -6,7 +6,8 @@
 
     <TextView
         android:id="@+id/myTextView"
-        android:textSize="48dp"
+        android:textSize="40dp"
+        android:textColor="@color/textMainWhite"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
