@@ -7,8 +7,8 @@ import android.widget.Button;
 
 import com.example.thomasskogemann.flashcard.data.model.Deck;
 import com.example.thomasskogemann.flashcard.data.model.Flashcard;
+import com.example.thomasskogemann.flashcard.data.model.User;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -34,15 +34,18 @@ public class MainActivity extends AppCompatActivity {
     public void start_clicked() {
         // put in intent
         Intent intent = new Intent(this, ShowCardActivity.class);
-        intent.putExtra("dummyDeck", generateDummyDeck(10));
+        Deck dummyDeck = generateDummyDeck(10);
+        intent.putExtra("dummyDeck", dummyDeck);
+        intent.putExtra("dummyUser", generateDummyUser(1,"dummyUser",dummyDeck));
         //change activity
         startActivity(intent);
     }
 
+    // Methods to create dummyDeck, flashcards and users
     public Deck generateDummyDeck(int numberOfFlashcards) {
         ArrayList<Flashcard> flashCards = new ArrayList<>();
         for (int i = 0; i < numberOfFlashcards; i++) {
-            Flashcard flashcard = createFlashCard(i, 4);
+            Flashcard flashcard = createDummyFlashCard(i, 4);
             flashCards.add(flashcard);
         }
 
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         return deck;
     }
 
-    private Flashcard createFlashCard(int idNumber, int numberOfQuestions) {
+    private Flashcard createDummyFlashCard(int idNumber, int numberOfQuestions) {
         int id = idNumber;
         String question = "Her står spørgsmålet! Lalalal bla bla";
         ArrayList<String> questions = new ArrayList<>();
@@ -62,7 +65,12 @@ public class MainActivity extends AppCompatActivity {
             questions.add("Wrong Answer " + i);
         }
 
-        Flashcard flashcard = new Flashcard(questions, id, question);
+        Flashcard flashcard = new Flashcard(questions,0, id, question);
         return flashcard;
+    }
+
+    private User generateDummyUser(int id,String name,Deck deck ){
+       User dummyUser = new User(id, name,deck);
+        return dummyUser;
     }
 }

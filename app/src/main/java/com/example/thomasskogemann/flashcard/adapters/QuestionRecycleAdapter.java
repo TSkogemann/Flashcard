@@ -42,7 +42,8 @@ public class QuestionRecycleAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+
         if (holder instanceof HeaderViewHolder) {
             ((HeaderViewHolder) holder).headerTextView.setText(myDataset.getQuestion());
             return;
@@ -50,8 +51,15 @@ public class QuestionRecycleAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             QuestionHolder questinViwHolder = (QuestionHolder) holder;
             String question = myDataset.getAnswers().get(position - 1);
             questinViwHolder.questionView.setText("Question " + question);
-            //headerViewHolder.headerTextView.setText("Question " + question);
-            //((QuestionHolder) holder).questionView.setText(myDataset.getQuestion());
+
+            // onClickListener
+            questinViwHolder.questionView.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View view){
+                    itemclick.onItemClicked(myDataset.getAnswers().get(position -1));
+                }
+            });
 
         }
     }

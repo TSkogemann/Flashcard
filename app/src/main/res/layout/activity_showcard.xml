@@ -8,14 +8,18 @@
     >
 
     <TextView
-        android:id="@+id/show_content"
+        android:id="@+id/show_user_info"
+        android:text="User info"
+        android:textSize="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/show_content_recycler_view"
         android:visibility="visible"
+        android:layout_below="@+id/show_user_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/start_flash_card"
@@ -24,6 +28,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/show_question_recycler_view"
+        android:layout_below="@+id/show_user_info"
         android:visibility="invisible"
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
@@ -44,6 +49,16 @@
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         />
+    <Button
+        android:id="@+id/answer"
+        android:text="_temp data"
+        android:textColor="@color/colorPrimary"
+        android:background="@color/textMainWhite"
+        android:visibility="invisible"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
 </RelativeLayout>

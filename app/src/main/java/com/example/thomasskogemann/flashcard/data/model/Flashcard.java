@@ -11,6 +11,8 @@ public class Flashcard implements Serializable {
     ArrayList<String> answers = new ArrayList<>();
     int id;
     String question;
+    //Der skal være en correct Answer position
+    int correctAnswerPosition;
 
     public ArrayList<String> getAnswers() {
         return answers;
@@ -22,9 +24,10 @@ public class Flashcard implements Serializable {
 
     public String getQuestion(){return question;}
 
-    public Flashcard(ArrayList<String> answers, int id, String question) {
+    public Flashcard(ArrayList<String> answers, int correctAnswerPosition, int id, String question) {
         this.answers = answers;
         this.id = id;
         this.question = question;
+        this.correctAnswerPosition = correctAnswerPosition;
     }
 }
