@@ -10,6 +10,7 @@ import com.example.thomasskogemann.flashcard.data.model.Flashcard;
 import com.example.thomasskogemann.flashcard.data.model.User;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,11 +33,16 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.start_btn)
     public void start_clicked() {
+        // generating dummy info
+        Deck dummyDeck = generateDummyDeck(10);
+        User dummyUser =  generateDummyUser(1,"dummyUser",dummyDeck);
+        dummyUser.addDeck(generateDummyDeck(8));
+        dummyUser.addDeck(generateDummyDeck(7));
+        dummyUser.addDeck(generateDummyDeck(4));
+        dummyUser.addDeck(generateDummyDeck(1));
         // put in intent
         Intent intent = new Intent(this, ShowCardActivity.class);
-        Deck dummyDeck = generateDummyDeck(10);
-        intent.putExtra("dummyDeck", dummyDeck);
-        intent.putExtra("dummyUser", generateDummyUser(1,"dummyUser",dummyDeck));
+        intent.putExtra("dummyUser", dummyUser);
         //change activity
         startActivity(intent);
     }
@@ -58,11 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
     private Flashcard createDummyFlashCard(int idNumber, int numberOfQuestions) {
         int id = idNumber;
-        String question = "Her står spørgsmålet! Lalalal bla bla";
+        String question = "Her står spørgsmålet! Lalalal bla bla " + getRandomString();
         ArrayList<String> questions = new ArrayList<>();
         questions.add("Correct Answer");
         for (int i = 1; i < numberOfQuestions; i++) {
-            questions.add("Wrong Answer " + i);
+            questions.add(getRandomString() + " " + i);
         }
 
         Flashcard flashcard = new Flashcard(questions,0, id, question);
@@ -72,5 +78,18 @@ public class MainActivity extends AppCompatActivity {
     private User generateDummyUser(int id,String name,Deck deck ){
        User dummyUser = new User(id, name,deck);
         return dummyUser;
+    }
+
+    private String getRandomString(){
+        ArrayList<String> strings = new ArrayList<>();
+        strings.add("Faxe kondi");
+        strings.add("Coca Cola");
+        strings.add("Pepsi");
+        strings.add("Fanta");
+        strings.add("7UP");
+        strings.add("Pepsi max");
+        strings.add("Cola Light");
+        Random random = new Random();
+        return strings.get(random.nextInt(strings.size()));
     }
 }

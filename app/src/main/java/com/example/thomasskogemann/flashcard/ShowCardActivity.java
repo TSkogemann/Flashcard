@@ -84,8 +84,10 @@ public class ShowCardActivity extends AppCompatActivity {
 
         //Setting currentDeck
         if (getIntent() != null) {
-            currentDeck = (Deck) getIntent().getSerializableExtra("dummyDeck");
-            currentUser.setCurrentDecck(0);
+            //currentDeck = (Deck) getIntent().getSerializableExtra("dummyDeck");
+
+            currentUser.setCurrentDeck(0);
+            currentDeck = currentUser.getDeckList().get(currentUser.getCurrentDeck());
             // specify an adapter (see also next example)
             mAdapter = new RecycleAdapter(currentDeck, new Itemclick() {
                 @Override
@@ -120,12 +122,14 @@ public class ShowCardActivity extends AppCompatActivity {
     public void answer_btn_clicked() {
         if (myFlashCardData.getAnswers().get(0).equals(answer_btn.getText())) {
             // Correct answer
-            currentUser.SetCardCorrect(currentUser.getCurrentDecck(), currentCard);
+            currentUser.SetCardCorrect(currentUser.getCurrentDeck(), currentCard);
             nextCard();
+
         } else {
             // Incorrect answer
-            currentUser.SetCardIncorrect(currentUser.getCurrentDecck(),currentCard);
+            currentUser.SetCardIncorrect(currentUser.getCurrentDeck(),currentCard);
             nextCard();
+
         }
     }
 
@@ -136,9 +140,19 @@ public class ShowCardActivity extends AppCompatActivity {
         }
         answer_btn.setText("Answer");
         myFlashCardData = currentDeck.getFlashcards().get(currentCard);
+        //TODO change view NOT WORKING
+        mQuestionAdapter.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
+        mQuestionView.invalidate();
+        mRecyclerView.invalidate();
+        // should be one of the above 4
     }
 
     private void deckDone() {
         // not made
+        currentUser.nextDeck();
+        currentCard=0;
+        currentUser.setCurrentDeck(currentUser.getCurrentDeck());
+      //  mangler noget notify
     }
 }

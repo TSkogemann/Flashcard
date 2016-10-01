@@ -12,13 +12,22 @@ public class User implements Serializable {
     private String name;
     private ArrayList<Deck> deckList = new ArrayList<>();
     private ArrayList<DeckProgress> deckProgressList = new ArrayList<>();
-    private int currentDecck;
+    private int currentDeck;
 
     public User(int id, String name, Deck deck) {
         this.id = id;
         this.name = name;
         deckList.add(deck);
         deckProgressList.add(new DeckProgress(deck));
+    }
+
+    public void addDeck(Deck deck){
+        deckList.add(deck);
+        deckProgressList.add(new DeckProgress(deck));
+    }
+
+    public ArrayList<Deck> getDeckList() {
+        return deckList;
     }
 
     public String getName() {
@@ -29,12 +38,12 @@ public class User implements Serializable {
         return deckProgressList;
     }
 
-    public int getCurrentDecck() {
-        return currentDecck;
+    public int getCurrentDeck() {
+        return currentDeck;
     }
 
-    public void setCurrentDecck(int currentDecck) {
-        this.currentDecck = currentDecck;
+    public void setCurrentDeck(int currentDeck) {
+        this.currentDeck = currentDeck;
     }
 
     public void SetCardCorrect(int deckIndex, int cardIndex) {
@@ -43,5 +52,9 @@ public class User implements Serializable {
 
     public void SetCardIncorrect(int deckIndex, int cardIndex) {
         deckProgressList.get(deckIndex).setProgressIncorrect(cardIndex);
+    }
+
+    public void nextDeck() {
+        this.currentDeck ++;
     }
 }
