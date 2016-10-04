@@ -28,4 +28,10 @@ public class Deck implements Serializable {
         this.title = title;
         this.flashcards = flashcards;
     }
+
+    public void update(Deck other){
+        id = other.id;
+        title = other.title;
+        flashcards = other.flashcards;
+    }
 }

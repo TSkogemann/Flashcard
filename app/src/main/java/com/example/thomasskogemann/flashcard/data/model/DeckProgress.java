@@ -16,16 +16,20 @@ public class DeckProgress implements Serializable {
         this.id = deck.getId();
         this.title = deck.getTitle();
 
-        for (Flashcard card :deck.getFlashcards()) {
+        for (Flashcard card : deck.getFlashcards()) {
             progress.add(0);
         }
     }
 
-    public void setProgressCorrect(int index) {
-        progress.set(index,1);
+    public ArrayList<Integer> getProgress() {
+        return progress;
     }
 
-    public void setProgressIncorrect(int index){
-        progress.set(index,2);
+    public void setProgressCorrect(int index) {
+        progress.set(index, 1);
+    }
+
+    public void setProgressIncorrect(int index) {
+        progress.set(index, 2);
     }
 }
