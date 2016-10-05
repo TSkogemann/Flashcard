@@ -71,22 +71,23 @@
         android:text="_Start Deck from start"
         android:textSize="24dp"
         android:textColor="@color/colorPrimary"
-        android:background="@color/textMainWhite"
+        style="@style/ButtonStyle"
         android:visibility="visible"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_width="160dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         />
     <Button
         android:id="@+id/answer"
         android:text="_temp data"
+        android:textSize="24dp"
         android:textColor="@color/colorPrimary"
-        android:background="@color/textMainWhite"
+        style="@style/ButtonStyle"
         android:visibility="invisible"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
+        android:layout_width="220dp"
         android:layout_height="wrap_content" />
 
 

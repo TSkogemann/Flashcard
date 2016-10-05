@@ -33,8 +33,7 @@ import butterknife.OnClick;
  * Created by Thomas Skogemann on 27-09-2016.
  */
 public class ShowCardActivity extends AppCompatActivity {
-    private RecyclerView mRecyclerView;
-    private RecyclerView mQuestionView;
+
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.Adapter mQuestionAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -63,10 +62,10 @@ public class ShowCardActivity extends AppCompatActivity {
 
     //RecyclerViews
     @BindView(R.id.show_content_recycler_view)
-    RecyclerView recycler_view;
+    RecyclerView mRecyclerView;
 
     @BindView(R.id.show_question_recycler_view)
-    RecyclerView question_view;
+    RecyclerView mQuestionView;
 
     //buttons
     @BindView(R.id.start_flash_card)
@@ -81,11 +80,6 @@ public class ShowCardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_showcard);
         ButterKnife.bind(this);
 
-        //recyclerView
-        mRecyclerView = (RecyclerView) findViewById(R.id.show_content_recycler_view);
-        mQuestionView = (RecyclerView) findViewById(R.id.show_question_recycler_view);
-
-
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mQuestionManager = new LinearLayoutManager(this);
@@ -93,9 +87,10 @@ public class ShowCardActivity extends AppCompatActivity {
         mQuestionView.setLayoutManager(mQuestionManager);
 
         //Setting user
-        currentUser = (User) getIntent().getSerializableExtra("dummyUser");
-        show_user_info.setText("" + currentUser.getName());
-
+        if(getIntent().hasExtra("dummyUser")) {
+            currentUser = (User) getIntent().getSerializableExtra("dummyUser");
+            show_user_info.setText("" + currentUser.getName());
+        }
 
         //Setting currentDeck
         if (getIntent() != null) {
