@@ -65,6 +65,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onError() {
 
+             /*   dummyUser.addDeck(generateDummyDeck(8));
+                dummyUser.addDeck(generateDummyDeck(7));
+                dummyUser.addDeck(generateDummyDeck(4));
+                dummyUser.addDeck(generateDummyDeck(1));
+                Intent intent = new Intent(MainActivity.this, ShowCardActivity.class);
+                intent.putExtra("dummyUser", dummyUser);
+                //change activity
+                startActivity(intent);
+                */
             }
         }).execute();
 

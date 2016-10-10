@@ -54,7 +54,7 @@ public class User implements Serializable {
         deckProgressList.get(deckIndex).setProgressIncorrect(cardIndex);
     }
 
-    public void nextDeck() {
+    public void ½nextDeck() {
         this.currentDeck ++;
     }
 }
