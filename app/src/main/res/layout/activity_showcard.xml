@@ -9,27 +9,29 @@
 
     <TextView
         android:id="@+id/show_user_info"
-        android:text="User info"
+        android:text="_User info"
         android:textSize="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         />
+
+
     <TextView
-        android:id="@+id/show_card_info"
-        android:text="card info"
+        android:id="@+id/show_category_info"
+        android:text="_Category"
         android:textSize="26dp"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/show_user_info"
-
+        android:layout_alignParentLeft="true"
         />
 
     <TextView
-        android:id="@+id/show_deck_info"
-        android:text="Deck Info"
-        android:textSize="26dp"
+        android:id="@+id/show_date_info"
+        android:text="_Date"
+        android:textSize="18dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/show_user_info"
@@ -37,8 +39,9 @@
         />
     <TextView
         android:id="@+id/show_progress_info"
-        android:text="1/10"
+        android:text="_1/10"
         android:textSize="26dp"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/show_user_info"
@@ -48,7 +51,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/show_content_recycler_view"
         android:visibility="visible"
-        android:layout_below="@+id/show_deck_info"
+        android:layout_below="@+id/show_progress_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/start_flash_card"
@@ -57,7 +60,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/show_question_recycler_view"
-        android:layout_below="@+id/show_card_info"
+        android:layout_below="@+id/show_progress_info"
         android:visibility="invisible"
         android:layout_centerInParent="true"
         android:layout_width="match_parent"

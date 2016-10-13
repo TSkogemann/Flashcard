@@ -4,25 +4,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.thomasskogemann.flashcard.R;
 import com.example.thomasskogemann.flashcard.data.model.Flashcard;
 
-import butterknife.ButterKnife;
-
 /**
  * Created by Thomas Skogemann on 28-09-2016.
  */
-public class QuestionRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Itemclick {
+public class QuestionRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Flashcard myDataset;
-    private Itemclick itemclick;
+    private ItemclickListener itemclickListener;
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
 
-    public QuestionRecycleAdapter(Flashcard myDataset, Itemclick itemclick) {
+    public QuestionRecycleAdapter(Flashcard myDataset, ItemclickListener itemclickListener) {
         this.myDataset = myDataset;
-        this.itemclick = itemclick;
+        this.itemclickListener = itemclickListener;
     }
 
     @Override
@@ -49,7 +46,7 @@ public class QuestionRecycleAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             return;
         } else {
             QuestionHolder questinViwHolder = (QuestionHolder) holder;
-            String question = myDataset.getAnswers().get(position - 1);
+            String question = myDataset.getAnswers().get(position-1).getAnswer();
             questinViwHolder.questionView.setText("Question " + question);
 
             // onClickListener
@@ -57,7 +54,7 @@ public class QuestionRecycleAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 @Override
                 public void onClick(View view){
-                    itemclick.onItemClicked(myDataset.getAnswers().get(position -1));
+                    itemclickListener.onItemClicked(position -1, myDataset.getAnswers().get(position -1).getAnswer());
                 }
             });
 
@@ -76,10 +73,5 @@ public class QuestionRecycleAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         } else {
             return TYPE_ITEM;
         }
-    }
-
-    @Override
-    public void onItemClicked(String data) {
-
     }
 }

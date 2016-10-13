@@ -1,6 +1,5 @@
 package com.example.thomasskogemann.flashcard;
 
-import com.example.thomasskogemann.flashcard.data.model.Deck;
 import com.example.thomasskogemann.flashcard.data.model.Flashcard;
 
 import org.junit.Test;

@@ -6,23 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.thomasskogemann.flashcard.R;
-import com.example.thomasskogemann.flashcard.data.model.Deck;
-
-import java.util.ArrayList;
+import com.example.thomasskogemann.flashcard.data.model.User;
 
 /**
  * Created by Thomas Skogemann on 27-09-2016.
  */
 public class RecycleAdapter extends RecyclerView.Adapter<MyViewHolder> {
-    private Deck myDataset;
-    private Itemclick itemclick;
+    private User myDataset;
 
-    public RecycleAdapter(Deck myDataset, Itemclick itemclick) {
+    public RecycleAdapter(User myDataset) {
         this.myDataset = myDataset;
-        this.itemclick = itemclick;
     }
 
-    public void setMyDataset(Deck myDataset) {
+    public void setMyDataset(User myDataset) {
         this.myDataset = myDataset;
     }
 

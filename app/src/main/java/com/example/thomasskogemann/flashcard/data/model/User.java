@@ -8,53 +8,25 @@ import java.util.ArrayList;
  */
 public class User implements Serializable {
 
-    private int id;
+    private String id;
     private String name;
-    private ArrayList<Deck> deckList = new ArrayList<>();
-    private ArrayList<DeckProgress> deckProgressList = new ArrayList<>();
-    private int currentDeck;
+    private ArrayList<Flashcard> flashcards = new ArrayList<>();
 
-    public User(int id, String name, Deck deck) {
+    public User(String id, String name, ArrayList<Flashcard> flashcards) {
         this.id = id;
         this.name = name;
-        deckList.add(deck);
-        deckProgressList.add(new DeckProgress(deck));
+        this.flashcards = flashcards;
     }
 
-    public void addDeck(Deck deck){
-        deckList.add(deck);
-        deckProgressList.add(new DeckProgress(deck));
-    }
-
-    public ArrayList<Deck> getDeckList() {
-        return deckList;
+    public String getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public ArrayList<DeckProgress> getDeckProgressList() {
-        return deckProgressList;
-    }
-
-    public int getCurrentDeck() {
-        return currentDeck;
-    }
-
-    public void setCurrentDeck(int currentDeck) {
-        this.currentDeck = currentDeck;
-    }
-
-    public void SetCardCorrect(int deckIndex, int cardIndex) {
-    deckProgressList.get(deckIndex).setProgressCorrect(cardIndex);
-    }
-
-    public void SetCardIncorrect(int deckIndex, int cardIndex) {
-        deckProgressList.get(deckIndex).setProgressIncorrect(cardIndex);
-    }
-
-    public void ½nextDeck() {
-        this.currentDeck ++;
+    public ArrayList<Flashcard> getFlashcards() {
+        return flashcards;
     }
 }

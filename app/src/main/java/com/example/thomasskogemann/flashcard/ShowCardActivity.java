@@ -1,13 +1,12 @@
 package com.example.thomasskogemann.flashcard;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
@@ -15,15 +14,16 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.thomasskogemann.flashcard.adapters.Itemclick;
+import com.example.thomasskogemann.flashcard.adapters.ItemclickListener;
 import com.example.thomasskogemann.flashcard.adapters.QuestionRecycleAdapter;
 import com.example.thomasskogemann.flashcard.adapters.RecycleAdapter;
-import com.example.thomasskogemann.flashcard.data.model.Deck;
-import com.example.thomasskogemann.flashcard.data.model.DeckProgress;
+import com.example.thomasskogemann.flashcard.data.model.Answer;
 import com.example.thomasskogemann.flashcard.data.model.Flashcard;
+import com.example.thomasskogemann.flashcard.data.model.Rating;
 import com.example.thomasskogemann.flashcard.data.model.User;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,10 +38,11 @@ public class ShowCardActivity extends AppCompatActivity {
     private RecyclerView.Adapter mQuestionAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.LayoutManager mQuestionManager;
-    private Deck currentDeck = new Deck(-1, "temp", new ArrayList<Flashcard>());
-    private Flashcard myFlashCardData = new Flashcard(new ArrayList<String>(), 0, 0, "tempQuestion");
+    private Flashcard flashcardData = new Flashcard("tempCategory", new ArrayList<Answer>(), "tempID", new Rating(), "tempQuestion");
     private User currentUser;
-    private int currentCard;
+    private int currentCard = 0;
+    private int answerNumber = 0;
+    private int redoMode = 0; // 0 = off 1 = on
 
     //Layout
     @BindView(R.id.show_card_layout)
@@ -51,14 +52,14 @@ public class ShowCardActivity extends AppCompatActivity {
     @BindView(R.id.show_user_info)
     TextView show_user_info;
 
-    @BindView(R.id.show_deck_info)
-    TextView show_deck_info;
-
-    @BindView(R.id.show_card_info)
-    TextView show_card_info;
+    @BindView(R.id.show_category_info)
+    TextView show_category_info;
 
     @BindView(R.id.show_progress_info)
     TextView show_progress_info;
+
+    @BindView(R.id.show_date_info)
+    TextView show_date_info;
 
     //RecyclerViews
     @BindView(R.id.show_content_recycler_view)
@@ -87,51 +88,39 @@ public class ShowCardActivity extends AppCompatActivity {
         mQuestionView.setLayoutManager(mQuestionManager);
 
         //Setting user
-        if(getIntent().hasExtra("dummyUser")) {
+        if (getIntent().hasExtra("dummyUser")) {
             currentUser = (User) getIntent().getSerializableExtra("dummyUser");
             show_user_info.setText("" + currentUser.getName());
         }
+        // setting view
+        settingProgressInfo();
+        setDateInfo();
+        //show_category_info.setText(currentUser.getFlashcards().get(currentCard).getCategory());
 
-        //Setting currentDeck
-        if (getIntent() != null) {
-            currentUser.setCurrentDeck(0);
-            currentDeck = currentUser.getDeckList().get(currentUser.getCurrentDeck());
-            // setting current deck info
-            show_deck_info.setText(currentDeck.getTitle());
-            // specify an adapter (see also next example)
-            mAdapter = new RecycleAdapter(currentDeck, new Itemclick() {
-                @Override
-                public void onItemClicked(String data) {
-                    Log.i(ShowCardActivity.class.getSimpleName(), data);
-                }
-            });
-            currentCard = 0;
-            myFlashCardData = currentDeck.getFlashcards().get(currentCard);
-            // setting current card info
-            //todo should flashcards have a title for a better overview ?
-            show_card_info.setText("" + myFlashCardData.getId());
-            mQuestionAdapter = new QuestionRecycleAdapter(myFlashCardData, new Itemclick() {
-                @Override
-                public void onItemClicked(String data) {
-                    Log.i(ShowCardActivity.class.getSimpleName(), data);
-                    answer_btn.setText(data);
-                }
-            });
-            // setting  progress info
-            settingProgressInfo();
 
-            //Spannable wordtoSpan = new SpannableString("1/10");
-            //wordtoSpan.setSpan(new BackgroundColorSpan(Color.RED),0,1,1);
-            //wordtoSpan.setSpan(new ForegroundColorSpan(Color.GREEN), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            //show_progress_info.setText(wordtoSpan);
+        //Setting adapters
+        mAdapter = new RecycleAdapter(currentUser);
+        mQuestionAdapter = new QuestionRecycleAdapter(flashcardData, new ItemclickListener() {
+            @Override
+            public void onItemClicked(int itemNumber, String data) {
+                Log.i(ShowCardActivity.class.getSimpleName(), data);
+                answer_btn.setText(data);
+                answerNumber = itemNumber;
+            }
+        });
+        updateView();
 
-            // setting adapters to views
-            mRecyclerView.setAdapter(mAdapter);
-            mQuestionView.setAdapter(mQuestionAdapter);
-        }
+        // setting adapters to views
+        mRecyclerView.setAdapter(mAdapter);
+        mQuestionView.setAdapter(mQuestionAdapter);
+
     }
 
-
+    private void setDateInfo() {
+        show_progress_info.setVisibility(View.INVISIBLE);
+        show_date_info.setVisibility(View.VISIBLE);
+        show_date_info.setText("" + new Date());
+    }
 
 
     @OnClick(R.id.start_flash_card)
@@ -139,89 +128,163 @@ public class ShowCardActivity extends AppCompatActivity {
         mRecyclerView.setVisibility(View.GONE);
         mQuestionView.setVisibility(View.VISIBLE);
         answer_btn.setVisibility(View.VISIBLE);
+        show_progress_info.setVisibility(View.VISIBLE);
+        show_date_info.setVisibility(View.INVISIBLE);
         start_flash_card_btn.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.answer)
     public void answer_btn_clicked() {
-        if (myFlashCardData.getAnswers().get(0).equals(answer_btn.getText())) {
+        Flashcard card = currentUser.getFlashcards().get(currentCard);
+        if (card.getAnswers().get(answerNumber).getCorrect() == true) {
             // Correct answer
-            currentUser.SetCardCorrect(currentUser.getCurrentDeck(), currentCard);
-
+            //TODO set rating
+            card.setRating(calculateRating(true, "tempCorrectId", 5, new Date(), 10));
             nextCard();
-
         } else {
             // Incorrect answer
-            currentUser.SetCardIncorrect(currentUser.getCurrentDeck(), currentCard);
+            card.setRating(calculateRating(false, "tempIncorrectId", 1, new Date(), 15));
             nextCard();
-
         }
+    }
+
+    private Rating calculateRating(boolean isCorrect, String id, int rating, Date date, int time) {
+        Rating newRating = new Rating();
+        // setting is correct
+        newRating.setCorrect(isCorrect);
+        // setting id - should be autogenerated?
+        newRating.set_id(id);
+        // setting rating - TODO needs a method to calculate how
+        newRating.setRating(rating);
+        // setting date
+        newRating.setSolveDate(date);
+        // setting time it took to solve the question - TODO need a method
+        newRating.setTime(time);
+        return newRating;
     }
 
     public void nextCard() {
         currentCard++;
-        if (currentCard  >= currentDeck.getFlashcards().size()) {
+        if (currentCard >= currentUser.getFlashcards().size()) {
             deckDone();
-
         }
-        answer_btn.setText("Answer");
-        updateCard();
-
-
+        updateView();
     }
 
-    private void updateCard() {
-        myFlashCardData.update(currentDeck.getFlashcards().get(currentCard));
-        show_card_info.setText("" + currentDeck.getFlashcards().get(currentCard).getId());
+    private void updateView() {
+        answer_btn.setText("Answer");
+        updateNextCard();
         settingProgressInfo();
         mQuestionAdapter.notifyDataSetChanged();
     }
 
-    private void deckDone() {
-        if (currentUser.getCurrentDeck() + 1 >= currentUser.getDeckList().size()) {
-            // TODO When all decks are done it just restarts at index 0
-            currentDeck.update(currentUser.getDeckList().get(0));
-            mQuestionAdapter.notifyDataSetChanged();
+    private void updateNextCard() {
+        if (redoMode == 0) {
+            if (currentUser.getFlashcards().size() > currentCard) {
+                flashcardData.update(currentUser.getFlashcards().get(currentCard));
+            }
         }
-        nextDeck();
+        if (redoMode == 1) {
+            if (currentUser.getFlashcards().size() > currentCard) {
+                if (currentUser.getFlashcards().get(currentCard).getRating().getCorrect() == false) {
+                    flashcardData.update(currentUser.getFlashcards().get(currentCard));
+                } else
+                    nextCard();
+            } else redoMode = 0;
+        }
+    }
+
+    private void deckDone() {
+        //todo
+        redoIncorrectCards();
+        if (redoMode == 0) {
+            showResults();
+        }
 
     }
 
-    private void nextDeck() {
+    private void redoIncorrectCards() {
+        if (redoMode == 1) {
+            redoMode = 0;
+            return;
+        }
+
+        if (redoMode == 0) {
+            redoMode = 1;
+            currentCard = 0;
+        }
+    }
+
+    private void showResults() {
+        //TODO
+        // intent
+        Intent intent = new Intent(ShowCardActivity.this, ResultActivity.class);
+        intent.putExtra("currentUser", currentUser);
+        //change activity
+        startActivity(intent);
+        /*
         currentUser.nextDeck();
         currentCard = 0;
         currentDeck.update(currentUser.getDeckList().get(currentUser.getCurrentDeck()));
         show_deck_info.setText(currentUser.getDeckList().get(currentUser.getCurrentDeck()).getTitle());
         mQuestionAdapter.notifyDataSetChanged();
+        */
+    }
+
+
+    // methods used for creating Span text. Colored text
+    private void settingProgressInfo() {
+        if (redoMode == 0) {
+            String coloredText = setIncorrectAnswers();
+            String fullText = setCardsLeft() + "/" + coloredText;
+            int color = Color.RED;
+            setColor(show_progress_info, fullText, coloredText, color);
+        }
+        if (redoMode == 1) {
+            int incorrectLeft = Integer.parseInt(setIncorrectAnswers());
+            show_progress_info.setText("TODO");
+
+        }
     }
 
     private void setColor(TextView view, String fulltext, String subtext, int color) {
         view.setText(fulltext, TextView.BufferType.SPANNABLE);
         Spannable str = (Spannable) view.getText();
-        int i = fulltext.indexOf(subtext);
+        int i = fulltext.indexOf("/") + 1;
         str.setSpan(new ForegroundColorSpan(color), i, i + subtext.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
     }
-    private void settingProgressInfo() {
-        String coloredText = setCorrectAnswers();
-        String fullText = coloredText+"/"+setTotalAnswers();
-        int color = Color.GREEN;
-        setColor(show_progress_info, fullText, coloredText, color);
-    }
 
-    private String setTotalAnswers() {
-        ArrayList<Integer> progress = currentUser.getDeckProgressList().get(currentUser.getCurrentDeck()).getProgress();
-        return ""+progress.size();
-    }
-
-    private String setCorrectAnswers() {
-        DeckProgress progressDeck = currentUser.getDeckProgressList().get(currentUser.getCurrentDeck());
-        int res=0;
-        for (Integer answer: progressDeck.getProgress()) {
-            if (answer == 1){
-                res++;
+    private String setCardsLeft() {
+        int cards = 0;
+        if (redoMode == 1) {
+            for (Flashcard flashcard : currentUser.getFlashcards()) {
+                if (flashcard.getRating().getCorrect() != null) {
+                    if (flashcard.getRating().getCorrect() == false) {
+                        cards++;
+                    }
+                }
             }
         }
-        return ""+res;
+
+        if (redoMode == 0) {
+            cards = currentUser.getFlashcards().size() - currentCard;
+        }
+        return "" + cards;
     }
+
+    private String setIncorrectAnswers() {
+
+        int res = 0;
+
+        for (Flashcard flashcard : currentUser.getFlashcards()) {
+            if (flashcard.getRating().getCorrect() != null) {
+                if (flashcard.getRating().getCorrect() == false) {
+                    res++;
+                }
+            }
+        }
+        return "" + res;
+    }
+
 }
