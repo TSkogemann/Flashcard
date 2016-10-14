@@ -96,4 +96,20 @@ public class Flashcard implements Serializable {
         return flashcard;
     }
 
+    public static Flashcard createDummyFlashCard(int numberOfQuestions) {
+        String category = Utils.getRandomString() + "Category";
+        String id = Utils.getRandomString() + "ID";
+        String question = "Her står spørgsmålet! Lalalal bla bla " + Utils.getRandomString();
+        ArrayList<Answer> answers = new ArrayList<>();
+        Rating rating = new Rating();
+
+        for (int i = 0; i < numberOfQuestions; i++) {
+            Answer answer = new Answer(Utils.getRandomString(), Utils.getRandomString(), Utils.getRandomBoolean(i));
+            answers.add(answer);
+
+
+        }
+        Flashcard flashcard = new Flashcard(category, answers, id, rating, question);
+        return flashcard;
+    }
 }

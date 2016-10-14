@@ -30,8 +30,14 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
 
     @Override
     public void onBindViewHolder(ResultViewHolder holder, int position) {
-        holder.textView.setText("Your answer was: " + user.getFlashcards().get(position).getRating().getCorrect());
-        holder.subTextView.setText("TESTESTT " + user.getFlashcards().get(position).getRating().getCorrect());
+        String answer;
+        if (user.getFlashcards().get(position).getRating().getCorrect()== true){
+            answer = "correct";
+        } else answer = "incorrect";
+        holder.resultCategoryView.setText(user.getFlashcards().get(position).getCategory());
+        holder.resultRatingView.setText("Your rating: " + user.getFlashcards().get(position).getRating().getRating());
+        holder.resultCorrectView.setText("You answer was: " + answer);
+
 
     }
 

@@ -10,6 +10,7 @@ import com.example.thomasskogemann.flashcard.data.model.Flashcard;
 import com.example.thomasskogemann.flashcard.data.model.GetCardTask;
 import com.example.thomasskogemann.flashcard.data.model.Rating;
 import com.example.thomasskogemann.flashcard.data.model.User;
+import com.example.thomasskogemann.flashcard.data.model.Utils;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.start_btn)
     public void start_clicked() {
         // generating dummy info
-        final User dummyUser = generateDummyUser(getRandomString() + "ID", "dummyUser", 5, 4);
+        final User dummyUser = User.generateDummyUser(Utils.getRandomString() + "ID", "dummyUser", 5, 4);
 
         // intent
         Intent intent = new Intent(MainActivity.this, ShowCardActivity.class);
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 ---------------------------------------------------------------------------------------------------------------*/
     }
 
-
+/* ---------------------- flyttet til objecter og Utils ------------------------------
     private Flashcard createDummyFlashCard(int numberOfQuestions) {
         String category = getRandomString() + "Category";
         String id = getRandomString() + "ID";
@@ -123,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         if (rnd1 >= rnd2) {
             return false;
         } else return true;
-        */
-    }
 
+    }
+*/
 }
