@@ -4,6 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/show_result_layout"
+    android:background="@drawable/background_gradiant"
     >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/result_list"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        >
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

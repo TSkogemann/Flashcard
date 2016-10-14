@@ -116,6 +116,12 @@ public class ShowCardActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        currentCard=0;
+    }
+
     private void setDateInfo() {
         show_progress_info.setVisibility(View.INVISIBLE);
         show_date_info.setVisibility(View.VISIBLE);
@@ -129,6 +135,7 @@ public class ShowCardActivity extends AppCompatActivity {
         mQuestionView.setVisibility(View.VISIBLE);
         answer_btn.setVisibility(View.VISIBLE);
         show_progress_info.setVisibility(View.VISIBLE);
+        show_category_info.setVisibility(View.VISIBLE);
         show_date_info.setVisibility(View.INVISIBLE);
         start_flash_card_btn.setVisibility(View.GONE);
     }
@@ -239,11 +246,21 @@ public class ShowCardActivity extends AppCompatActivity {
             String fullText = setCardsLeft() + "/" + coloredText;
             int color = Color.RED;
             setColor(show_progress_info, fullText, coloredText, color);
+            setCategoryInfo();
+
         }
         if (redoMode == 1) {
             int incorrectLeft = Integer.parseInt(setIncorrectAnswers());
             show_progress_info.setText("TODO");
+            setCategoryInfo();
 
+        }
+    }
+
+    private void setCategoryInfo() {
+        // setting card category
+        if (currentUser.getFlashcards().size() > currentCard) {
+            show_category_info.setText(currentUser.getFlashcards().get(currentCard).getCategory());
         }
     }
 
