@@ -62,7 +62,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.get_more_cards_btn)
-    public void getMoreCards(){
+    public void getMoreCards() {
         // generating dummy info
         MainActivity bla = new MainActivity();
         final User dummyUser = User.generateDummyUser(Utils.getRandomString() + "ID", "dummyUser", 10, 4);

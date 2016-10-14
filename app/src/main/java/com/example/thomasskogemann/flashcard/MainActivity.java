@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 ---------------------------------------------------------------------------------------------------------------*/
     }
 
-/* ---------------------- flyttet til objecter og Utils ------------------------------
+/* -------------------------- flyttet til objecter og Utils ------------------------------
     private Flashcard createDummyFlashCard(int numberOfQuestions) {
         String category = getRandomString() + "Category";
         String id = getRandomString() + "ID";
@@ -126,5 +126,5 @@ public class MainActivity extends AppCompatActivity {
         } else return true;
 
     }
-*/
+-----------------------------------------------------------------------------------------------------------------------*/
 }

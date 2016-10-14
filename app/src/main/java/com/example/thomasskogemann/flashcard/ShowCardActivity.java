@@ -142,8 +142,16 @@ public class ShowCardActivity extends AppCompatActivity {
 
     @OnClick(R.id.answer)
     public void answer_btn_clicked() {
+        // Guard should be changed, lowering currentCard by 1 is not a clean way to do it
+        //// TODO: 14-10-2016  
+        if (currentUser.getFlashcards().size() <= currentCard) {
+            Log.d(currentCard + " - " + currentUser.getFlashcards().size(),"");
+            currentCard = currentCard -1;
+            return;
+        }
+
         Flashcard card = currentUser.getFlashcards().get(currentCard);
-        if (card.getAnswers().get(answerNumber).getCorrect() == true) {
+        if (card.getAnswers().get(answerNumber).getCorrect()) {
             // Correct answer
             //TODO set rating
             card.setRating(calculateRating(true, "tempCorrectId", 5, new Date(), 10));
