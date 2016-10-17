@@ -5,6 +5,10 @@
     android:layout_height="match_parent"
     android:id="@+id/show_result_layout"
     android:background="@drawable/background_gradiant"
+    android:paddingLeft="18dp"
+    android:paddingRight="18dp"
+    android:paddingBottom="18dp"
+    android:paddingTop="18dp"
     >
 
     <android.support.v7.widget.RecyclerView
@@ -28,6 +32,7 @@
         android:layout_centerInParent="true"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
+        android:paddingTop="8dp"
 
         />
 </RelativeLayout>
