@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.start_btn)
     public void start_clicked() {
         // generating dummy info
-        final User dummyUser = User.generateDummyUser(Utils.getRandomString() + "ID", "dummyUser", 5, 4);
+        final User dummyUser = User.Companion.generateDummyUser(Utils.INSTANCE.getRandomString() + "ID", "dummyUser", 5, 4);
 
         // intent
         Intent intent = new Intent(MainActivity.this, ShowCardActivity.class);

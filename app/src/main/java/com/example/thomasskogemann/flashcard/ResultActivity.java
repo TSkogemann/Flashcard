@@ -65,7 +65,7 @@ public class ResultActivity extends AppCompatActivity {
     public void getMoreCards() {
         // generating dummy info
         MainActivity bla = new MainActivity();
-        final User dummyUser = User.generateDummyUser(Utils.getRandomString() + "ID", "dummyUser", 10, 4);
+        final User dummyUser = User.Companion.generateDummyUser(Utils.INSTANCE.getRandomString() + "ID", "dummyUser", 10, 4);
 
         // intent
         Intent intent = new Intent(ResultActivity.this, ShowCardActivity.class);

@@ -50,7 +50,7 @@ public class GetCardTask extends AsyncTask<Object, Object, JSONArray> {
             if(o == null)
                 listener.onError();
             else
-                listener.onSucces(Flashcard.parseFrom(o.getJSONObject(0)));
+                listener.onSucces(Flashcard.Companion.parseFrom(o.getJSONObject(0)));
         } catch (JSONException e) {
             e.printStackTrace();
         }
