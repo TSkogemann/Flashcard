@@ -1,52 +1,54 @@
-package com.example.thomasskogemann.flashcard;
+package com.example.thomasskogemann.flashcard
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.Button;
+import android.content.Intent
+import android.support.v7.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Button
 
-import com.example.thomasskogemann.flashcard.data.model.Answer;
-import com.example.thomasskogemann.flashcard.data.model.Flashcard;
-import com.example.thomasskogemann.flashcard.data.model.GetCardTask;
-import com.example.thomasskogemann.flashcard.data.model.Rating;
-import com.example.thomasskogemann.flashcard.data.model.User;
-import com.example.thomasskogemann.flashcard.data.model.Utils;
+import com.example.thomasskogemann.flashcard.data.model.Answer
+import com.example.thomasskogemann.flashcard.data.model.Flashcard
+import com.example.thomasskogemann.flashcard.data.model.GetCardTask
+import com.example.thomasskogemann.flashcard.data.model.Rating
+import com.example.thomasskogemann.flashcard.data.model.User
+import com.example.thomasskogemann.flashcard.data.model.Utils
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.ArrayList
+import java.util.Random
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import butterknife.BindView
+import butterknife.ButterKnife
+import butterknife.OnClick
 
-public class MainActivity extends AppCompatActivity {
+class MainActivity : AppCompatActivity() {
 
     //Buttons
     @BindView(R.id.start_btn)
-    Button StartBtn;
+    internal var StartBtn: Button? = null
 
 
     //onCreate
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        ButterKnife.bind(this)
     }
 
     @OnClick(R.id.start_btn)
-    public void start_clicked() {
+    fun start_clicked() {
         // generating dummy info
-        final User dummyUser = User.Companion.generateDummyUser(Utils.INSTANCE.getRandomString() + "ID", "dummyUser", 5, 4);
+        val dummyUser = User.generateDummyUser(Utils.randomString + "ID", "dummyUser", 5, 4)
 
         // intent
-        Intent intent = new Intent(MainActivity.this, ShowCardActivity.class);
-        intent.putExtra("dummyUser", dummyUser);
+        val intent = Intent(this@MainActivity, ShowCardActivity::class.java)
+        intent.putExtra("dummyUser", dummyUser)
         //change activity
-        startActivity(intent);
+        startActivity(intent)
 
         // TODO HER code to get objects from the backend!
-        /*------------------------------------------------------------------------------------------------
+
+    }}
+/*
+        ------------------------------------------------------------------------------------------------
         new GetCardTask(new GetCardTask.ApiListener() {
             @Override
             public void onSucces(Flashcard tempFlashcard) {
@@ -68,10 +70,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }).execute();
----------------------------------------------------------------------------------------------------------------*/
+---------------------------------------------------------------------------------------------------------------
     }
 
-/* -------------------------- flyttet til objecter og Utils ------------------------------
+ -------------------------- flyttet til objecter og Utils ------------------------------
     private Flashcard createDummyFlashCard(int numberOfQuestions) {
         String category = getRandomString() + "Category";
         String id = getRandomString() + "ID";
@@ -117,7 +119,8 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else return false;
 
-        /*  can be used to get a random boolean
+        */
+/*  can be used to get a random boolean
         Random random = new Random();
         int rnd1 = random.nextInt(7);
         int rnd2 = random.nextInt(7);
@@ -126,5 +129,6 @@ public class MainActivity extends AppCompatActivity {
         } else return true;
 
     }
------------------------------------------------------------------------------------------------------------------------*/
-}
+-----------------------------------------------------------------------------------------------------------------------
+*/
+
