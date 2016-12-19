@@ -51,19 +51,17 @@ class ResultActivity : AppCompatActivity() {
         // setting adapters to views
         result_list.adapter = mResultAddapter
 
+        // setting onclick Listeners
+        get_more_cards_btn.setOnClickListener {
+            // generating dummy info
+            val bla = MainActivity()
+            val dummyUser = User.generateDummyUser(Utils.randomString + "ID", "dummyUser", 10, 4)
 
-    }
-
-    @OnClick(R.id.get_more_cards_btn)
-    fun getMoreCards() {
-        // generating dummy info
-        val bla = MainActivity()
-        val dummyUser = User.generateDummyUser(Utils.randomString + "ID", "dummyUser", 10, 4)
-
-        // intent
-        val intent = Intent(this@ResultActivity, ShowCardActivity::class.java)
-        intent.putExtra("dummyUser", dummyUser)
-        //change activity
-        startActivity(intent)
+            // intent
+            val intent = Intent(this@ResultActivity, ShowCardActivity::class.java)
+            intent.putExtra("dummyUser", dummyUser)
+            //change activity
+            startActivity(intent)
+        }
     }
 }
