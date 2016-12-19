@@ -25,7 +25,6 @@ import kotlinx.android.synthetic.main.activity_result.*
  * Created by Thomas Skogemann on 13-10-2016.
  */
 class ResultActivity : AppCompatActivity() {
-    private var user: User?=null
     private var mResultAddapter: ResultAdapter?=null
     private var mLayoutManager: RecyclerView.LayoutManager? = null
 
@@ -36,15 +35,11 @@ class ResultActivity : AppCompatActivity() {
         ButterKnife.bind(this)
 
         // setting user
-        if (intent.hasExtra("currentUser")) {
-            user = intent.getSerializableExtra("currentUser") as User
-
-        }
+        val user = intent.getSerializableExtra("currentUser") as User
 
         // setting layout manager
         mLayoutManager = LinearLayoutManager(this)
         result_list.layoutManager = mLayoutManager
-
 
         // Adapter
         mResultAddapter = ResultAdapter(user)
