@@ -18,35 +18,29 @@ import java.util.Random
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
-    //Buttons
-    @BindView(R.id.start_btn)
-    internal var StartBtn: Button? = null
-
 
     //onCreate
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        ButterKnife.bind(this)
+
+        start_btn.setOnClickListener {
+            // generating dummy info
+            val dummyUser = User.generateDummyUser(Utils.randomString + "ID", "dummyUser", 5, 4)
+
+            // intent
+            val intent = Intent(this@MainActivity, ShowCardActivity::class.java)
+            intent.putExtra("dummyUser", dummyUser)
+            //change activity
+            startActivity(intent)
+
+            // TODO HER code to get objects from the backend!
+        }
     }
-
-    @OnClick(R.id.start_btn)
-    fun start_clicked() {
-        // generating dummy info
-        val dummyUser = User.generateDummyUser(Utils.randomString + "ID", "dummyUser", 5, 4)
-
-        // intent
-        val intent = Intent(this@MainActivity, ShowCardActivity::class.java)
-        intent.putExtra("dummyUser", dummyUser)
-        //change activity
-        startActivity(intent)
-
-        // TODO HER code to get objects from the backend!
-
-    }}
+}
 /*
         ------------------------------------------------------------------------------------------------
         new GetCardTask(new GetCardTask.ApiListener() {

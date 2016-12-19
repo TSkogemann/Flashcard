@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'android-apt'
+apply plugin: 'kotlin-android-extensions'
+
 
 android {
     compileSdkVersion 23
@@ -22,9 +24,6 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
-    kapt {
-        generateStubs = true
-    }
 }
 
 dependencies {
@@ -34,7 +33,7 @@ dependencies {
     //snackbar
     compile 'com.android.support:design:23.4.0'
     //butterknife
-    kapt 'com.jakewharton:butterknife:8.1.0'
+    compile 'com.jakewharton:butterknife:8.1.0'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
     // Rest
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
