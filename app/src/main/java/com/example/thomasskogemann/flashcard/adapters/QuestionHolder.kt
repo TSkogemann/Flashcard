@@ -11,12 +11,12 @@ import com.example.thomasskogemann.flashcard.R
  */
 class QuestionHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    var questionView: TextView
-    var questionHeader: TextView
+    var questionView: TextView?
+    var questionHeader: TextView?
 
     init {
 
-        questionView = view.findViewById(R.id.questionView) as TextView
-        questionHeader = view.findViewById(R.id.questionHeaderView) as TextView
+        questionView = view.findViewById(R.id.questionView) as TextView?
+        questionHeader = view.findViewById(R.id.questionHeaderView) as TextView?
     }
 }

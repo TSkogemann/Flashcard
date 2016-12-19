@@ -36,10 +36,10 @@ class QuestionRecycleAdapter(private val myDataset: Flashcard, private val itemc
         } else {
             val questinViwHolder = holder as QuestionHolder
             val question = myDataset.answers[position - 1].answer
-            questinViwHolder.questionView.text = "Question " + question
+            questinViwHolder.questionView!!.text = "Question " + question
 
             // onClickListener
-            questinViwHolder.questionView.setOnClickListener { itemclickListener.onItemClicked(position - 1, myDataset.answers[position - 1].answer) }
+            questinViwHolder.questionView!!.setOnClickListener { itemclickListener.onItemClicked(position - 1, myDataset.answers[position - 1].answer) }
 
         }
     }

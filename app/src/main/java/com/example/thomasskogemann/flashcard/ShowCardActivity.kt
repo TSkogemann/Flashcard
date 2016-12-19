@@ -70,10 +70,12 @@ class ShowCardActivity : AppCompatActivity() {
 
         //Setting adapters
         mAdapter = RecycleAdapter(currentUser)
-        mQuestionAdapter = QuestionRecycleAdapter(flashcardData, ItemclickListener { itemNumber, data ->
-            Log.i(ShowCardActivity::class.java.simpleName, data)
-            answer.text = data
-            answerNumber = itemNumber
+        mQuestionAdapter = QuestionRecycleAdapter(flashcardData, object : ItemclickListener {
+            override fun onItemClicked(itemNumber: Int, data: String) {
+                Log.i(ShowCardActivity::class.java.simpleName, data)
+                answer.text = data
+                answerNumber = itemNumber
+            }
         })
         updateView()
 
