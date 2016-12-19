@@ -81,6 +81,40 @@ class ShowCardActivity : AppCompatActivity() {
         show_content_recycler_view.adapter = mAdapter
         show_question_recycler_view.adapter = mQuestionAdapter
 
+        // setting onClickListeneres
+        start_flash_card.setOnClickListener {
+            show_content_recycler_view.visibility = View.GONE
+            show_question_recycler_view.visibility = View.VISIBLE
+            answer!!.visibility = View.VISIBLE
+            show_progress_info!!.visibility = View.VISIBLE
+            show_category_info!!.visibility = View.VISIBLE
+            show_date_info!!.visibility = View.INVISIBLE
+            start_flash_card!!.visibility = View.GONE
+        }
+
+        answer.setOnClickListener {
+            // Guard should be changed, lowering currentCard by 1 is not a clean way to do it
+            //// TODO: 14-10-2016
+            if (currentUser!!.flashcards.size <= currentCard) {
+                Log.d(currentCard.toString() + " - " + currentUser!!.flashcards.size, "")
+                currentCard = currentCard - 1
+
+            } else {
+
+                val card = currentUser!!.flashcards[currentCard]
+                if (card.answers[answerNumber].correct) {
+                    // Correct answer
+                    //TODO set rating
+                    card.rating = calculateRating(true, "tempCorrectId", 5, Date(), 10)
+                    nextCard()
+                } else {
+                    // Incorrect answer
+                    card.rating = calculateRating(false, "tempIncorrectId", 1, Date(), 15)
+                    nextCard()
+                }
+            }
+        }
+
     }
 
     override fun onResume() {
@@ -92,41 +126,6 @@ class ShowCardActivity : AppCompatActivity() {
         show_progress_info!!.visibility = View.INVISIBLE
         show_date_info.visibility = View.VISIBLE
         show_date_info.text = "" + Date()
-    }
-
-
-    @OnClick(R.id.start_flash_card)
-    fun startFlashCardClicked() {
-        show_content_recycler_view.visibility = View.GONE
-        show_question_recycler_view.visibility = View.VISIBLE
-        answer!!.visibility = View.VISIBLE
-        show_progress_info!!.visibility = View.VISIBLE
-        show_category_info!!.visibility = View.VISIBLE
-        show_date_info!!.visibility = View.INVISIBLE
-        start_flash_card!!.visibility = View.GONE
-    }
-
-    @OnClick(R.id.answer)
-    fun answer_btn_clicked() {
-        // Guard should be changed, lowering currentCard by 1 is not a clean way to do it
-        //// TODO: 14-10-2016
-        if (currentUser!!.flashcards.size <= currentCard) {
-            Log.d(currentCard.toString() + " - " + currentUser!!.flashcards.size, "")
-            currentCard = currentCard - 1
-            return
-        }
-
-        val card = currentUser!!.flashcards[currentCard]
-        if (card.answers[answerNumber].correct) {
-            // Correct answer
-            //TODO set rating
-            card.rating = calculateRating(true, "tempCorrectId", 5, Date(), 10)
-            nextCard()
-        } else {
-            // Incorrect answer
-            card.rating = calculateRating(false, "tempIncorrectId", 1, Date(), 15)
-            nextCard()
-        }
     }
 
     private fun calculateRating(isCorrect: Boolean, id: String, rating: Int, date: Date, time: Int): Rating {
